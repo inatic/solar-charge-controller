@@ -37,14 +37,12 @@ The primary reference for the hardware build is the KiCad schematic file located
 
 The controller's functionality relies on several key electronic components. The datasheets for these parts are available in the `7-datasheets/` directory and are essential reading for understanding the hardware.
 
-| Component         | Role in Project
-| :---              | :---
-| **ESP32-WROOM**   | **Main Microcontroller:** The "brain" of the controller. It runs the MPPT algorithm, reads sensors, drives the LCD, and manages all logic.
-| **ADS1115**       | **High-Precision ADC:** A 16-bit Analog-to-Digital converter that measures solar voltage, battery voltage, and current with high accuracy via an I2C interface.
-| **IR2104**        | **MOSFET Driver:** Takes the low-power PWM signal from the ESP32 and provides the high-current drive needed to switch the main power MOSFETs quickly and efficiently.
-| **CSD19505**      | **Power MOSFETs:** High-current switches that form the heart of the buck converter, controlling the flow of power from the solar panel to the battery.
-| **XL7005A**       | **Buck Regulator:** An auxiliary power supply that efficiently steps down the high input voltage to power the ESP32 and other low-voltage components.
-| **16x2 I2C LCD**  | **Display:** A standard 16-character, 2-line display for the user interface. |
+* **ESP32-WROOM:** The main Microcontroller. It runs the MPPT algorithm, reads sensors, drives the LCD, and manages all logic.
+* **ADS1115:** A 16-bit Analog-to-Digital converter that measures solar voltage, battery voltage, and current with high accuracy via an I2C interface.
+* **IR2104:** MOSFET Driver. Takes the low-power PWM signal from the ESP32 and provides the high-current drive needed to switch the main power MOSFETs quickly and efficiently.
+* **CSD19505:** Power MOSFETs. High-current switches that form the heart of the buck converter, controlling the flow of power from the solar panel to the battery.
+* **XL7005A:** Buck Regulator. An auxiliary power supply that efficiently steps down the high input voltage to power the ESP32 and other low-voltage components.
+* **16x2 I2C LCD:** Display. A standard 16-character, 2-line display for the user interface.
 
 ---
 
@@ -113,16 +111,14 @@ If uploading to the board works then the Arduino environment was set up correctl
 
 The firmware is split into multiple `.ino` files, which the Arduino IDE treats as tabs and combines into a single program. This keeps the code organized by function.
 
-| File                            | Role in Project
-| :---                            | :---
-| **ARDUINO_MPPT_FIRMWARE.ino**   | This is the main file. It contains the `setup()` function for initialization and the `loop()` function, which is the repeating heart of the program.
-| **2_Read_Sensors.ino**          | Handles all sensor measurements. It communicates with the **ADS1115 ADC** over I2C to get precise readings of panel voltage, battery voltage, and current.
-| **3_Device_Protection.ino**     | Acts as the safety supervisor. It constantly checks sensor values against the limits defined in the configuration.
-| **4_Charging_Algorithm.ino**    | This is the core of the MPPT logic. It find the maximum power point and also manages the battery charging states.
-| **5_System_Processes.ino**      | Manages various background tasks, such as checking for user input from the buttons and updating timers.
-| **6_Onboard_Telemetry.ino**     | Gathers all the data and prepares it for output.
-| **7_Wireless_Telemetry.ino**    | (If enabled) Manages the Wi-Fi connection and sends telemetry data to a remote server.
-| **8_LCD_Menu.ino**              | Controls the 16x2 LCD, displaying real-time data and allowing the user to navigate menus to view statistics and change settings.
+*   **ARDUINO_MPPT_FIRMWARE.ino:** This is the main file. It contains the `setup()` function for initialization and the `loop()` function, which is the repeating heart of the program.
+*   **2_Read_Sensors.ino:** Handles all sensor measurements. It communicates with the **ADS1115 ADC** over I2C to get precise readings of panel voltage, battery voltage, and current.
+*   **3_Device_Protection.ino:** Acts as the safety supervisor. It constantly checks sensor values against the limits defined in the configuration.
+*   **4_Charging_Algorithm.ino:** This is the core of the MPPT logic. It find the maximum power point and also manages the battery charging states.
+*   **5_System_Processes.ino:** Manages various background tasks, such as checking for user input from the buttons and updating timers.
+*   **6_Onboard_Telemetry.ino:** Gathers all the data and prepares it for output.
+*   **7_Wireless_Telemetry.ino:** (If enabled) Manages the Wi-Fi connection and sends telemetry data to a remote server.
+*   **8_LCD_Menu.ino:** Controls the 16x2 LCD, displaying real-time data and allowing the user to navigate menus to view statistics and change settings.
 
 ---
 
@@ -134,19 +130,17 @@ The firmware's behavior can be customized by changing variables in the **USER PA
 
 These flags enable or disable certain features of the controller.
 
-| Flag                            | Purpose
-| :---                            | :---
-| **MPPT_Mode**                   | Enable MPPT algorithm, when disabled charger uses CC-CV algorithm 
-| **output_Mode**                 | 0 = PSU MODE, 1 = Charger Mode  
-| **disableFlashAutoLoad**        | Forces the MPPT to not use flash saved settings, enabling this "1" defaults to programmed firmware settings.
-| **enablePPWM**                  | Enables Predictive PWM, this accelerates regulation speed (only applicable for battery charging application)
-| **enableWiFi**                  | Enable WiFi Connection
-| **enableFan**                   | Enable Cooling Fan
-| **enableBluetooth**             | Enable Bluetooth Connection
-| **enableLCD**                   | Enable LCD display
-| **enableLCDBacklight**          | Enable LCD display's backlight
-| **overrideFan**                 | Fan always on
-| **enableDynamicCooling**        | Enable for PWM cooling control 
+*   `MPPT_Mode`: Enable MPPT algorithm, when disabled charger uses CC-CV algorithm 
+*   `output_Mode`: 0 = PSU MODE, 1 = Charger Mode  
+*   `disableFlashAutoLoad`: Forces the MPPT to not use flash saved settings, enabling this "1" defaults to programmed firmware settings.
+*   `enablePPWM`: Enables Predictive PWM, this accelerates regulation speed (only applicable for battery charging application)
+*   `enableWiFi`: Enable WiFi Connection
+*   `enableFan`: Enable Cooling Fan
+*   `enableBluetooth`: Enable Bluetooth Connection
+*   `enableLCD`: Enable LCD display
+*   `enableLCDBacklight`: Enable LCD display's backlight
+*   `overrideFan`: Fan always on
+*   `enableDynamicCooling`: Enable for PWM cooling control 
 
 Most of these settings are self-explanatory, but the two mode settings do with some extra information.
 
@@ -341,21 +335,21 @@ This is the core telemetry data, showing live values.
 
 | Flag        | Meaning                           | Explanation
 | :---        | :---                              | :--- 
-| **PI**      | Power Input                       | Power being generated by the solar panels, in Watts (W).
+| **PI**      | Power Input                       | Power being generated by the solar panels (W).
 | **PWM**     | PWM Duty Cycle                    | The current duty cycle value being sent to the buck converter.
-| **PPWM**    | Predictive PWM                    | The minimum duty cycle calculated by the predictive algorithm to maintain output voltage.
-| **VI**      | Voltage Input                     | The voltage from the solar panels, in Volts (V).
-| **VO**      | Voltage Output                    | The voltage of the battery, in Volts (V).
-| **CI**      | Current Input                     | The current from the solar panels, in Amps (A).
-| **CO**      | Current Output                    | The current going to the battery, in Amps (A).
-| **Wh**      | Watt-hours                        | The total energy harvested since the last reset, in Watt-hours.
-| **Temp**    | Temperature                       | The internal temperature of the unit, in Celsius (°C).
-| **CSMPV**   | Current Sensor Midpoint Voltage   | The auto-calibrated zero-current voltage of the ACS712 sensor.
-| **CSV**     | Current Sensor Voltage            | The raw voltage reading from the current sensor.
-| **VO%Dev**  | Voltage Output Deviation          | The battery voltage as a percentage of the maximum configured charging voltage.
-| **SOC**     | State of Charge                   | The estimated battery percentage (%).
-| **T**       | Time                              | The total time the unit has been running, in seconds.
-| **LoopT**   | Loop Time                         | The time it takes for the main loop() to execute once, in milliseconds (ms). This is a measure of how fast the controller is running.
+| **PPWM**    | Predictive PWM                    | Minimum duty cycle calculated by the predictive algorithm to maintain output voltage.
+| **VI**      | Voltage Input                     | Voltage from the solar panels, in Volts (V).
+| **VO**      | Voltage Output                    | Voltage of the battery, in Volts (V).
+| **CI**      | Current Input                     | Current from the solar panels, in Amps (A).
+| **CO**      | Current Output                    | Current going to the battery, in Amps (A).
+| **Wh**      | Watt-hours                        | Total energy harvested since the last reset, in Watt-hours.
+| **Temp**    | Temperature                       | Internal temperature of the unit, in Celsius (°C).
+| **CSMPV**   | Current Sensor Midpoint Voltage   | Auto-calibrated zero-current voltage of the ACS712 sensor.
+| **CSV**     | Current Sensor Voltage            | Raw voltage reading from the current sensor.
+| **VO%Dev**  | Voltage Output Deviation          | Battery voltage as a percentage of the maximum configured charging voltage.
+| **SOC**     | State of Charge                   | Estimated battery percentage (%).
+| **T**       | Time                              | Total time the unit has been running, in seconds.
+| **LoopT**   | Loop Time                         | Time it takes for the main loop() to execute once, in milliseconds (ms).
 
 ---
 

@@ -113,14 +113,14 @@ If uploading to the board works then the Arduino environment was set up correctl
 
 The firmware is split into multiple `.ino` files, which the Arduino IDE treats as tabs and combines into a single program. This keeps the code organized by function.
 
-| `ARDUINO_MPPT_FIRMWARE.ino`   | This is the main file. It contains the `setup()` function for initialization and the `loop()` function, which is the repeating heart of the program.
-| `2_Read_Sensors.ino`          | Handles all sensor measurements. It communicates with the **ADS1115 ADC** over I2C to get precise readings of panel voltage, battery voltage, and current.
-| `3_Device_Protection.ino`     | Acts as the safety supervisor. It constantly checks sensor values against the limits defined in the configuration.
-| `4_Charging_Algorithm.ino`    | This is the core of the MPPT logic. It find the maximum power point and also manages the battery charging states.
-| `5_System_Processes.ino`      | Manages various background tasks, such as checking for user input from the buttons and updating timers.
-| `6_Onboard_Telemetry.ino`     | Gathers all the data and prepares it for output.
-| `7_Wireless_Telemetry.ino`    | (If enabled) Manages the Wi-Fi connection and sends telemetry data to a remote server.
-| `8_LCD_Menu.ino`              | Controls the 16x2 LCD, displaying real-time data and allowing the user to navigate menus to view statistics and change settings.
+| **ARDUINO_MPPT_FIRMWARE.ino**   | This is the main file. It contains the `setup()` function for initialization and the `loop()` function, which is the repeating heart of the program.
+| **2_Read_Sensors.ino**          | Handles all sensor measurements. It communicates with the **ADS1115 ADC** over I2C to get precise readings of panel voltage, battery voltage, and current.
+| **3_Device_Protection.ino**     | Acts as the safety supervisor. It constantly checks sensor values against the limits defined in the configuration.
+| **4_Charging_Algorithm.ino**    | This is the core of the MPPT logic. It find the maximum power point and also manages the battery charging states.
+| **5_System_Processes.ino**      | Manages various background tasks, such as checking for user input from the buttons and updating timers.
+| **6_Onboard_Telemetry.ino**     | Gathers all the data and prepares it for output.
+| **7_Wireless_Telemetry.ino**    | (If enabled) Manages the Wi-Fi connection and sends telemetry data to a remote server.
+| **8_LCD_Menu.ino**              | Controls the 16x2 LCD, displaying real-time data and allowing the user to navigate menus to view statistics and change settings.
 
 ---
 
@@ -132,17 +132,17 @@ The firmware's behavior can be customized by changing variables in the **USER PA
 
 These flags enable or disable certain features of the controller.
 
-| `MPPT_Mode`                   | Enable MPPT algorithm, when disabled charger uses CC-CV algorithm 
-| `output_Mode`                 | 0 = PSU MODE, 1 = Charger Mode  
-| `disableFlashAutoLoad`        | Forces the MPPT to not use flash saved settings, enabling this "1" defaults to programmed firmware settings.
-| `enablePPWM`                  | Enables Predictive PWM, this accelerates regulation speed (only applicable for battery charging application)
-| `enableWiFi`                  | Enable WiFi Connection
-| `enableFan`                   | Enable Cooling Fan
-| `enableBluetooth`             | Enable Bluetooth Connection
-| `enableLCD`                   | Enable LCD display
-| `enableLCDBacklight`          | Enable LCD display's backlight
-| `overrideFan`                 | Fan always on
-| `enableDynamicCooling`        | Enable for PWM cooling control 
+| **MPPT_Mode**                   | Enable MPPT algorithm, when disabled charger uses CC-CV algorithm 
+| **output_Mode**                 | 0 = PSU MODE, 1 = Charger Mode  
+| **disableFlashAutoLoad**        | Forces the MPPT to not use flash saved settings, enabling this "1" defaults to programmed firmware settings.
+| **enablePPWM**                  | Enables Predictive PWM, this accelerates regulation speed (only applicable for battery charging application)
+| **enableWiFi**                  | Enable WiFi Connection
+| **enableFan**                   | Enable Cooling Fan
+| **enableBluetooth**             | Enable Bluetooth Connection
+| **enableLCD**                   | Enable LCD display
+| **enableLCDBacklight**          | Enable LCD display's backlight
+| **overrideFan**                 | Fan always on
+| **enableDynamicCooling**        | Enable for PWM cooling control 
 
 Most of these settings are self-explanatory, but the two mode settings do with some extra information.
 
@@ -306,52 +306,52 @@ When connected to a computer, the controller sends a stream of data over the USB
 
 The following flags indicate that an error has occured (1 = Active, 0 = Inactive).
 
-| Flag      | Meaning                   | Explanation
-| :---      | :---                      | :--- 
-| `ERR`     | General Error             | A summary flag. If this is 1, at least one of the other error flags is active.
-| `FLV`     | Fatally Low Voltage       | The system voltage is too low to continue operation.
-| `BNC`     | Battery Not Connected     | No battery is detected on the output (in charger mode).
-| `IUV`     | Input Undervoltage        | The input voltage (from solar) is too low.
-| `IOC`     | Input Overcurrent         | The input current is exceeding the absolute safe limit.
-| `OOV`     | Output Overvoltage        | The output voltage is exceeding the absolute safe limit.
-| `OOC`     | Output Overcurrent        | The output current is exceeding the absolute safe limit.
-| `OTE`     | Overtemperature           | The system temperature has exceeded the shutdown threshold.
-| `REC`     | Recovery Mode             | The system is in a special recovery state, usually after an input undervoltage event.
+| Flag        | Meaning                   | Explanation
+| :---        | :---                      | :--- 
+| **ERR**     | General Error             | A summary flag. If this is 1, at least one of the other error flags is active.
+| **FLV**     | Fatally Low Voltage       | The system voltage is too low to continue operation.
+| **BNC**     | Battery Not Connected     | No battery is detected on the output (in charger mode).
+| **IUV**     | Input Undervoltage        | The input voltage (from solar) is too low.
+| **IOC**     | Input Overcurrent         | The input current is exceeding the absolute safe limit.
+| **OOV**     | Output Overvoltage        | The output voltage is exceeding the absolute safe limit.
+| **OOC**     | Output Overcurrent        | The output current is exceeding the absolute safe limit.
+| **OTE**     | Overtemperature           | The system temperature has exceeded the shutdown threshold.
+| **REC**     | Recovery Mode             | The system is in a special recovery state, usually after an input undervoltage event.
 
 ### System Status
 
 These flags show the current operating mode and status of various components.
 
-| Flag      | Meaning                   | Explanation
-| :---      | :---                      | :--- 
-| `MPPTA`   | MPPT Algorithm            | 1 if the MPPT algorithm is active, 0 if using the simpler CC-CV algorithm.
-| `CM`      | Charger Mode              | 1 for Battery Charger Mode, 0 for Programmable Power Supply (PSU) Mode.
-| `BYP`     | Bypass MOSFET             | 1 if the input backflow protection MOSFET is enabled.
-| `EN`      | Buck Enabled              | 1 if the main buck converter is active and delivering power.
-| `FAN`     | Fan Status                | 1 if the cooling fan is currently on.
-| `WiFi`    | WiFi Status               | 1 if the WiFi is enabled.
+| Flag        | Meaning                   | Explanation
+| :---        | :---                      | :--- 
+| **MPPTA**   | MPPT Algorithm            | 1 if the MPPT algorithm is active, 0 if using the simpler CC-CV algorithm.
+| **CM**      | Charger Mode              | 1 for Battery Charger Mode, 0 for Programmable Power Supply (PSU) Mode.
+| **BYP**     | Bypass MOSFET             | 1 if the input backflow protection MOSFET is enabled.
+| **EN**      | Buck Enabled              | 1 if the main buck converter is active and delivering power.
+| **FAN**     | Fan Status                | 1 if the cooling fan is currently on.
+| **WiFi**    | WiFi Status               | 1 if the WiFi is enabled.
 
 ### Live Measurements
 
 This is the core telemetry data, showing live values.
 
-| Flag      | Meaning                           | Explanation
-| :---      | :---                              | :--- 
-| `PI`      | Power Input                       | Power being generated by the solar panels, in Watts (W).
-| `PWM`     | PWM Duty Cycle                    | The current duty cycle value being sent to the buck converter.
-| `PPWM`    | Predictive PWM                    | The minimum duty cycle calculated by the predictive algorithm to maintain output voltage.
-| `VI`      | Voltage Input                     | The voltage from the solar panels, in Volts (V).
-| `VO`      | Voltage Output                    | The voltage of the battery, in Volts (V).
-| `CI`      | Current Input                     | The current from the solar panels, in Amps (A).
-| `CO`      | Current Output                    | The current going to the battery, in Amps (A).
-| `Wh`      | Watt-hours                        | The total energy harvested since the last reset, in Watt-hours.
-| `Temp`    | Temperature                       | The internal temperature of the unit, in Celsius (°C).
-| `CSMPV`   | Current Sensor Midpoint Voltage   | The auto-calibrated zero-current voltage of the ACS712 sensor.
-| `CSV`     | Current Sensor Voltage            | The raw voltage reading from the current sensor.
-| `VO%Dev`  | Voltage Output Deviation          | The battery voltage as a percentage of the maximum configured charging voltage.
-| `SOC`     | State of Charge                   | The estimated battery percentage (%).
-| `T`       | Time                              | The total time the unit has been running, in seconds.
-| `LoopT`   | Loop Time                         | The time it takes for the main loop() to execute once, in milliseconds (ms). This is a measure of how fast the controller is running.
+| Flag        | Meaning                           | Explanation
+| :---        | :---                              | :--- 
+| **PI**      | Power Input                       | Power being generated by the solar panels, in Watts (W).
+| **PWM**     | PWM Duty Cycle                    | The current duty cycle value being sent to the buck converter.
+| **PPWM**    | Predictive PWM                    | The minimum duty cycle calculated by the predictive algorithm to maintain output voltage.
+| **VI**      | Voltage Input                     | The voltage from the solar panels, in Volts (V).
+| **VO**      | Voltage Output                    | The voltage of the battery, in Volts (V).
+| **CI**      | Current Input                     | The current from the solar panels, in Amps (A).
+| **CO**      | Current Output                    | The current going to the battery, in Amps (A).
+| **Wh**      | Watt-hours                        | The total energy harvested since the last reset, in Watt-hours.
+| **Temp**    | Temperature                       | The internal temperature of the unit, in Celsius (°C).
+| **CSMPV**   | Current Sensor Midpoint Voltage   | The auto-calibrated zero-current voltage of the ACS712 sensor.
+| **CSV**     | Current Sensor Voltage            | The raw voltage reading from the current sensor.
+| **VO%Dev**  | Voltage Output Deviation          | The battery voltage as a percentage of the maximum configured charging voltage.
+| **SOC**     | State of Charge                   | The estimated battery percentage (%).
+| **T**       | Time                              | The total time the unit has been running, in seconds.
+| **LoopT**   | Loop Time                         | The time it takes for the main loop() to execute once, in milliseconds (ms). This is a measure of how fast the controller is running.
 
 ---
 

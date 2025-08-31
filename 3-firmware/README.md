@@ -113,6 +113,8 @@ If uploading to the board works then the Arduino environment was set up correctl
 
 The firmware is split into multiple `.ino` files, which the Arduino IDE treats as tabs and combines into a single program. This keeps the code organized by function.
 
+| File                            | Role in Project
+| :---                            | :---
 | **ARDUINO_MPPT_FIRMWARE.ino**   | This is the main file. It contains the `setup()` function for initialization and the `loop()` function, which is the repeating heart of the program.
 | **2_Read_Sensors.ino**          | Handles all sensor measurements. It communicates with the **ADS1115 ADC** over I2C to get precise readings of panel voltage, battery voltage, and current.
 | **3_Device_Protection.ino**     | Acts as the safety supervisor. It constantly checks sensor values against the limits defined in the configuration.
@@ -132,6 +134,8 @@ The firmware's behavior can be customized by changing variables in the **USER PA
 
 These flags enable or disable certain features of the controller.
 
+| Flag                            | Purpose
+| :---                            | :---
 | **MPPT_Mode**                   | Enable MPPT algorithm, when disabled charger uses CC-CV algorithm 
 | **output_Mode**                 | 0 = PSU MODE, 1 = Charger Mode  
 | **disableFlashAutoLoad**        | Forces the MPPT to not use flash saved settings, enabling this "1" defaults to programmed firmware settings.
